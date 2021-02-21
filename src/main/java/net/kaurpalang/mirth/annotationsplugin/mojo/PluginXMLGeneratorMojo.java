@@ -1,11 +1,10 @@
 package net.kaurpalang.mirth.annotationsplugin.mojo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.kaurpalang.mirth.annotationsplugin.Constants;
+import net.kaurpalang.mirth.annotationsplugin.config.Constants;
 import net.kaurpalang.mirth.annotationsplugin.model.ApiProviderModel;
 import net.kaurpalang.mirth.annotationsplugin.model.ServerConfig;
 import org.apache.commons.io.FileUtils;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -24,8 +23,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mojo(name = "generate-plugin-xml", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 public class PluginXMLGeneratorMojo extends AbstractMojo {
@@ -57,7 +59,7 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
     @Parameter(property = "aggregatorPath", defaultValue = Constants.DEFAULT_AGGREGATOR_FILE_PATH)
     private String aggregatorPath;
 
-    @Parameter(property = "outputPath", defaultValue = "${project.basedir}/plugin.xml")
+    @Parameter(property = "outputPath", defaultValue = Constants.DEFAULT_PLUGIN_XML_OUTPUT_PATH)
     private String outputPath;
 
     private ObjectMapper mapper = new ObjectMapper();
@@ -119,6 +121,34 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
                 Element clientClasses = getClassesElement(doc, "clientClasses", config.getClientClasses());
                 rootElement.appendChild(clientClasses);
             }
+
+            // Libraries
+            MavenProject parentProject = project.getParent();
+            List<String> modules = parentProject.getModules().stream()
+                    .filter(s -> !s.equals(project.getArtifactId()))
+                    .collect(Collectors.toList());
+
+            Path parentBuilddir = parentProject.getBasedir().toPath();
+
+            for (String module : modules) {
+                Path submoduleBuildDir = Paths.get(parentBuilddir.toString(), module, "target");
+
+                if (Files.exists(submoduleBuildDir)) {
+
+                    File[] jarfiles = submoduleBuildDir.toFile().listFiles(
+                            (dir, name) -> name.equals(String.format("%s-%s.jar", parentProject.getArtifactId(), module))
+                    );
+
+                    for (File jarfile : jarfiles) {
+                        Element libraryElement = doc.createElement("library");
+                        libraryElement.setAttribute("type", module.toUpperCase());
+                        libraryElement.setAttribute("path", jarfile.getName());
+
+                        rootElement.appendChild(libraryElement);
+                    }
+                }
+            }
+
 
             // Api providers
             if (config.getApiProviders().size() > 0) {

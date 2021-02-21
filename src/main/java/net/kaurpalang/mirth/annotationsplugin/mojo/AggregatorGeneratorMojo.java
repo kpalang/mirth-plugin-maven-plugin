@@ -1,6 +1,6 @@
 package net.kaurpalang.mirth.annotationsplugin.mojo;
 
-import net.kaurpalang.mirth.annotationsplugin.Constants;
+import net.kaurpalang.mirth.annotationsplugin.config.Constants;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
