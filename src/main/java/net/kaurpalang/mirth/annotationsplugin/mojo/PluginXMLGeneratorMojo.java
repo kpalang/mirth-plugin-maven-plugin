@@ -57,7 +57,7 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
     @Parameter(property = "aggregatorPath", defaultValue = Constants.DEFAULT_AGGREGATOR_FILE_PATH)
     private String aggregatorPath;
 
-    @Parameter(property = "outputPath")
+    @Parameter(property = "outputPath", defaultValue = "${project.basedir}/plugin.xml")
     private String outputPath;
 
     private ObjectMapper mapper = new ObjectMapper();
@@ -122,7 +122,7 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
 
             // Api providers
             if (config.getApiProviders().size() > 0) {
-                Element apiProviderElement = doc.createElement("apiProvider");
+                Element apiProviderElement;
                 for (ApiProviderModel apiProvider : config.getApiProviders()) {
                     apiProviderElement = doc.createElement("apiProvider");
                     apiProviderElement.setAttribute("type", apiProvider.getType().toString());
