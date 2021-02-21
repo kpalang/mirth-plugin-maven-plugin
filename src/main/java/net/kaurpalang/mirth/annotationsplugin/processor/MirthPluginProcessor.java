@@ -2,7 +2,7 @@ package net.kaurpalang.mirth.annotationsplugin.processor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auto.service.AutoService;
-import net.kaurpalang.mirth.annotationsplugin.Constants;
+import net.kaurpalang.mirth.annotationsplugin.config.Constants;
 import net.kaurpalang.mirth.annotationsplugin.annotation.ApiProvider;
 import net.kaurpalang.mirth.annotationsplugin.annotation.ClientClass;
 import net.kaurpalang.mirth.annotationsplugin.annotation.ServerClass;
