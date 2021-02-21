@@ -32,3 +32,8 @@ Purpose is to generate the actual plugin.xml file.
 
 ## Installation
 Clone repo and run `mvn clean install`
+
+--- 
+
+## Usage
+See [Sample project](https://github.com/kpalang/mirth-sample-plugin) on Github
