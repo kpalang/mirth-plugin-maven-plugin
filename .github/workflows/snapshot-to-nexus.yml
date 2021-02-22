@@ -18,7 +18,7 @@ jobs:
       with:
         serverUrl: https://nexus.kaurpalang.com/
         username: github
-        p: ${{ secrets.GITHUBNEXUSPASSWORD }}
+        password: ${{ secrets.GITHUBNEXUSPASSWORD }}
         format: maven2
         repository: personal-snapshots
         coordinates: groupId=net.kaurpalang artifactId=mirth-plugin-maven-plugin version=0.1-SNAPSHOT
