@@ -5,12 +5,12 @@ import lombok.Getter;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ServerConfig {
+public class PluginState {
     @Getter private Set<String> serverClasses;
     @Getter private Set<String> clientClasses;
     @Getter private Set<ApiProviderModel> apiProviders;
 
-    public ServerConfig() {
+    public PluginState() {
         this.serverClasses = new HashSet<>();
         this.clientClasses = new HashSet<>();
         this.apiProviders = new HashSet<>();
