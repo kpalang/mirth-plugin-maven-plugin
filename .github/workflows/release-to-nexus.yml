@@ -1,4 +1,4 @@
-name: Release to Nexus
+name: Publish release to Nexus
 on: [push]
 
 jobs:
