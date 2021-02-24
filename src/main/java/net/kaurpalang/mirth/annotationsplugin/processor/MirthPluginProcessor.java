@@ -7,7 +7,7 @@ import net.kaurpalang.mirth.annotationsplugin.annotation.ApiProvider;
 import net.kaurpalang.mirth.annotationsplugin.annotation.ClientClass;
 import net.kaurpalang.mirth.annotationsplugin.annotation.ServerClass;
 import net.kaurpalang.mirth.annotationsplugin.model.ApiProviderModel;
-import net.kaurpalang.mirth.annotationsplugin.model.ServerConfig;
+import net.kaurpalang.mirth.annotationsplugin.model.PluginState;
 import org.apache.commons.io.FileUtils;
 
 import javax.annotation.processing.*;
@@ -103,21 +103,21 @@ public class MirthPluginProcessor extends AbstractProcessor {
             aggregatorFile.getParentFile().mkdirs();
 
             // If aggregation file exists, just read it in, if not, create one
-            ServerConfig serverConfig;
+            PluginState pluginState;
             if (aggregatorFile.createNewFile()) {
-                serverConfig = new ServerConfig();
+                pluginState = new PluginState();
             } else {
                 byte[] aggregatorFileArray = FileUtils.readFileToByteArray(aggregatorFile);
-                serverConfig = mapper.readValue(aggregatorFileArray, ServerConfig.class);
+                pluginState = mapper.readValue(aggregatorFileArray, PluginState.class);
             }
 
             // Add classes found during this round to all found files
-            serverConfig.getServerClasses().addAll(serverClasses);
-            serverConfig.getClientClasses().addAll(clientClasses);
-            serverConfig.getApiProviders().addAll(apiProviders);
+            pluginState.getServerClasses().addAll(serverClasses);
+            pluginState.getClientClasses().addAll(clientClasses);
+            pluginState.getApiProviders().addAll(apiProviders);
 
             // Write to file, with prettyness of course
-            String serverJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(serverConfig);
+            String serverJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(pluginState);
             Files.write(aggregatorFile.toPath(), serverJson.getBytes());
         } catch (Exception e) {
             messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());

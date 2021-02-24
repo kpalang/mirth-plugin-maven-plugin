@@ -3,7 +3,8 @@ package net.kaurpalang.mirth.annotationsplugin.mojo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.kaurpalang.mirth.annotationsplugin.config.Constants;
 import net.kaurpalang.mirth.annotationsplugin.model.ApiProviderModel;
-import net.kaurpalang.mirth.annotationsplugin.model.ServerConfig;
+import net.kaurpalang.mirth.annotationsplugin.model.LibraryModel;
+import net.kaurpalang.mirth.annotationsplugin.model.PluginState;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -74,7 +75,12 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
                 return;
             }
 
-            ServerConfig config = mapper.readValue(aggregatorFile, ServerConfig.class);
+            PluginState pluginState = mapper.readValue(aggregatorFile, PluginState.class);
+
+            // Map runtime libraries to state
+            mapRuntimeLibraries(pluginState.getRuntimeClientLibs(), "client");
+            mapRuntimeLibraries(pluginState.getRuntimeSharedLibs(), "shared");
+            mapRuntimeLibraries(pluginState.getRuntimeServerLibs(), "server");
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -85,40 +91,23 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
             rootElement.setAttribute("path", path);
             doc.appendChild(rootElement);
 
-            Element nameElement = doc.createElement("name");
-            nameElement.setTextContent(this.name);
-            rootElement.appendChild(nameElement);
-
-            Element authorElement = doc.createElement("author");
-            authorElement.setTextContent(this.author);
-            rootElement.appendChild(authorElement);
-
-            Element pluginVersionElement = doc.createElement("pluginVersion");
-            pluginVersionElement.setTextContent(this.pluginVersion);
-            rootElement.appendChild(pluginVersionElement);
-
-            Element mirthVersionElement = doc.createElement("mirthVersion");
-            mirthVersionElement.setTextContent(this.mirthVersion);
-            rootElement.appendChild(mirthVersionElement);
-
-            Element urlElement = doc.createElement("url");
-            urlElement.setTextContent(this.url);
-            rootElement.appendChild(urlElement);
-
-            Element descriptionElement = doc.createElement("description");
-            descriptionElement.setTextContent(this.description);
-            rootElement.appendChild(descriptionElement);
+            // Append detail elements
+            appendSimpleChildToElement(doc, rootElement, "name", this.name);
+            appendSimpleChildToElement(doc, rootElement, "author", this.author);
+            appendSimpleChildToElement(doc, rootElement, "pluginVersion", this.pluginVersion);
+            appendSimpleChildToElement(doc, rootElement, "mirthVersion", this.mirthVersion);
+            appendSimpleChildToElement(doc, rootElement, "url", this.url);
+            appendSimpleChildToElement(doc, rootElement, "description", this.description);
 
             // Server classes
-            if (config.getServerClasses().size() > 0) {
-                Element serverClasses = getClassesElement(doc, "serverClasses", config.getServerClasses());
+            if (pluginState.getServerClasses().size() > 0) {
+                Element serverClasses = getClassesElement(doc, "serverClasses", pluginState.getServerClasses());
                 rootElement.appendChild(serverClasses);
             }
 
-
             // Client classes
-            if (config.getClientClasses().size() > 0) {
-                Element clientClasses = getClassesElement(doc, "clientClasses", config.getClientClasses());
+            if (pluginState.getClientClasses().size() > 0) {
+                Element clientClasses = getClassesElement(doc, "clientClasses", pluginState.getClientClasses());
                 rootElement.appendChild(clientClasses);
             }
 
@@ -128,10 +117,10 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
                     .filter(s -> !s.equals(project.getArtifactId()))
                     .collect(Collectors.toList());
 
-            Path parentBuilddir = parentProject.getBasedir().toPath();
+            Path parentBuildDir = parentProject.getBasedir().toPath();
 
             for (String module : modules) {
-                Path submoduleBuildDir = Paths.get(parentBuilddir.toString(), module, "target");
+                Path submoduleBuildDir = Paths.get(parentBuildDir.toString(), module, "target");
 
                 if (Files.exists(submoduleBuildDir)) {
 
@@ -140,20 +129,31 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
                     );
 
                     for (File jarfile : jarfiles) {
-                        Element libraryElement = doc.createElement("library");
-                        libraryElement.setAttribute("type", module.toUpperCase());
-                        libraryElement.setAttribute("path", jarfile.getName());
-
-                        rootElement.appendChild(libraryElement);
+                        LibraryModel model = new LibraryModel(module.toUpperCase(), jarfile.getName());
+                        appendLibraryChildToElement(doc, rootElement, model);
                     }
                 }
             }
 
+            // Runtime libraries
+            // Client
+            for (LibraryModel model : pluginState.getRuntimeClientLibs()) {
+                appendLibraryChildToElement(doc, rootElement, model);
+            }
+            // Shared
+            for (LibraryModel model : pluginState.getRuntimeSharedLibs()) {
+                appendLibraryChildToElement(doc, rootElement, model);
+            }
+            // Server
+            for (LibraryModel model : pluginState.getRuntimeServerLibs()) {
+                appendLibraryChildToElement(doc, rootElement, model);
+            }
+
 
             // Api providers
-            if (config.getApiProviders().size() > 0) {
+            if (pluginState.getApiProviders().size() > 0) {
                 Element apiProviderElement;
-                for (ApiProviderModel apiProvider : config.getApiProviders()) {
+                for (ApiProviderModel apiProvider : pluginState.getApiProviders()) {
                     apiProviderElement = doc.createElement("apiProvider");
                     apiProviderElement.setAttribute("type", apiProvider.getType().toString());
                     apiProviderElement.setAttribute("name", apiProvider.getName());
@@ -183,15 +183,38 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
         }
     }
 
+    private void mapRuntimeLibraries(List<LibraryModel> targetList, String submodule) {
+        Path submoduleLibsDir = Paths.get(project.getParent().getBasedir().getAbsolutePath(), "libs", "runtime", submodule);
+
+        if (Files.exists(submoduleLibsDir)) {
+            File[] jarfiles = submoduleLibsDir.toFile().listFiles();
+
+            for (File jarfile : jarfiles) {
+                LibraryModel libModel = new LibraryModel(submodule.toUpperCase(), String.format("libs/%s", jarfile.getName()));
+                targetList.add(libModel);
+            }
+        }
+    }
+
     private Element getClassesElement(Document doc, String rootTagName, Set<String> classes) {
         Element classesElement = doc.createElement(rootTagName);
-        Element classStringElement;
         for (String serverClass : classes) {
-            classStringElement = doc.createElement("string");
-            classStringElement.setTextContent(serverClass);
-            classesElement.appendChild(classStringElement);
+            appendSimpleChildToElement(doc, classesElement, "string", serverClass);
         }
 
         return classesElement;
+    }
+
+    private void appendLibraryChildToElement(Document doc, Element rootElement, LibraryModel model) {
+        Element appendableElement = doc.createElement("library");
+        appendableElement.setAttribute("type", model.getType());
+        appendableElement.setAttribute("path", model.getPath());
+        rootElement.appendChild(appendableElement);
+    }
+
+    private void appendSimpleChildToElement(Document doc, Element rootElement, String tagname, String textcontent) {
+        Element appendableElement = doc.createElement(tagname);
+        appendableElement.setTextContent(textcontent);
+        rootElement.appendChild(appendableElement);
     }
 }
