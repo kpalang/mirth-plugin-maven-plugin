@@ -26,17 +26,6 @@
     <autoservice.version>1.0-rc7</autoservice.version>
   </properties>
 
-  <distributionManagement>
-    <repository>
-      <id>nexus-releases</id>
-      <url>https://nexus.kaurpalang.com/repository/maven-releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>nexus-snapshots</id>
-      <url>https://nexus.kaurpalang.com/repository/maven-snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
