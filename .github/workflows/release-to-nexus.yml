@@ -28,4 +28,4 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Publish to Nexus
-        run: mvn deploy -DskipTests -s $GITHUB_WORKSPACE/settings.xml
+        run: mvn deploy -DskipTests
