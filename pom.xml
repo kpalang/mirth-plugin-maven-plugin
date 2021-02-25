@@ -16,8 +16,6 @@
     <maven.compiler.target>11</maven.compiler.target>
 
     <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-
-    <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
 
     <commons.version>2.8.0</commons.version>
