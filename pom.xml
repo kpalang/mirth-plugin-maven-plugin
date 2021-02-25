@@ -73,8 +73,8 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>nexus-snapshots</id>
-      <url>https://nexus.kaurpalang.com/repository/personal-snapshots/</url>
+      <id>nexus-kaurpalang</id>
+      <url>https://nexus.kaurpalang.com/repository/maven-public/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -105,8 +105,8 @@
         <version>${nexus-staging-maven-plugin.version}</version>
         <extensions>true</extensions>
         <configuration>
-          <serverId>nexus-snapshots</serverId>
-          <nexusUrl>https://nexus.kaurpalang.com/repository/personal-snapshots/</nexusUrl>
+          <serverId>nexus-kaurpalang</serverId>
+          <nexusUrl>https://nexus.kaurpalang.com/repository/maven-public/</nexusUrl>
         </configuration>
       </plugin>
 
