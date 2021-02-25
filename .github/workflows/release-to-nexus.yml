@@ -12,6 +12,8 @@ jobs:
         with:
           java-version: 11
           server-id: nexus-kaurpalang-releases
+          username: github
+          password: ${{ secrets.GITHUBNEXUSPASSWORD }}
           settings-path: ${{ github.workspace }}
 
       - name: Build with Maven
@@ -19,6 +21,3 @@ jobs:
 
       - name: Publish to Nexus
         run: mvn deploy -DskipTests -s $GITHUB_WORKSPACE/settings.xml
-        env:
-          MAVEN_USERNAME: github
-          MAVEN_PASSWORD: ${{ secrets.GITHUBNEXUSPASSWORD }}
