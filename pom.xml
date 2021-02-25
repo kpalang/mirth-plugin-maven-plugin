@@ -72,9 +72,13 @@
   </dependencies>
 
   <distributionManagement>
+    <repository>
+      <id>nexus-kaurpalang-releases</id>
+      <url>https://nexus.kaurpalang.com/repository/maven-releases/</url>
+    </repository>
     <snapshotRepository>
-      <id>nexus-kaurpalang</id>
-      <url>https://nexus.kaurpalang.com/repository/maven-public/</url>
+      <id>nexus-kaurpalang-snapshots</id>
+      <url>https://nexus.kaurpalang.com/repository/maven-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
