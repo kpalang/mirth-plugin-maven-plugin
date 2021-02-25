@@ -3,6 +3,23 @@
 A maven plugin to simplify and automate [NextGen Connect](https://github.com/nextgenhealthcare/connect) plugin development.
 
 ---
+## Installation 
+
+```xml
+<repository>
+    <id>nexus</id>
+    <url>https://nexus.kaurpalang.com/repository/maven-public/</url>
+</repository>
+```
+```xml
+<dependency>
+  <groupId>net.kaurpalang</groupId>
+  <artifactId>mirth-plugin-maven-plugin</artifactId>
+  <version>v1.0.0</version>
+</dependency>
+```
+
+---
 
 ## Maven goals overview
 
