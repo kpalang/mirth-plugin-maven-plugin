@@ -13,10 +13,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          server-id: nexus-kaurpalang-releases
-          server-username: github
-          server-password: ${{ secrets.GITHUBNEXUSPASSWORD }}
-          settings-path: ${{ github.workspace }}
 
       - name: Clean settings.xml
         run: rm -rf ~/.m2/settings.xml
