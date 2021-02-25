@@ -12,8 +12,8 @@ jobs:
         with:
           java-version: 11
           server-id: nexus-kaurpalang-releases
-          username: github
-          password: ${{ secrets.GITHUBNEXUSPASSWORD }}
+          server-username: github
+          server-password: ${{ secrets.GITHUBNEXUSPASSWORD }}
           settings-path: ${{ github.workspace }}
 
       - name: Build with Maven
