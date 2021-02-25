@@ -16,6 +16,14 @@ jobs:
           server-password: ${{ secrets.GITHUBNEXUSPASSWORD }}
           settings-path: ${{ github.workspace }}
 
+      - name: Clean settings.xml
+        run: rm -rf ~/.m2/settings.xml
+
+      - name: Create settings.xml
+        uses: s4u/maven-settings-action@v1
+        with:
+          servers: '[{"id": "nexus-kaurpalang-releases", "username": "github", "password": "${{secrets.NEXUS_PASSWORD}}"}]'
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
