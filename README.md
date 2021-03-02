@@ -20,6 +20,9 @@ A maven plugin to simplify and automate [NextGen Connect](https://github.com/nex
 ```
 ---
 ## Usage
+
+See [Sample project](https://github.com/kpalang/mirth-sample-plugin) on Github
+
 ### `@ServerClass`
 Annotated class will be generated as a `<string>` entry.
 ```xml
@@ -76,8 +79,3 @@ Purpose is to generate the actual plugin.xml file.
 | \<path> | The name of the directory that will be extracted into Mirth's extensions directory | sampleplugin |
 | \<aggregatorPath> | Aggregation file location | distribution/aggregator/aggregated.json |
 | \<outputPath> | Specifies where to put generated plugin.xml | ${project.basedir}/plugin.xml |
-
----
-
-## Usage
-See [Sample project](https://github.com/kpalang/mirth-sample-plugin) on Github
