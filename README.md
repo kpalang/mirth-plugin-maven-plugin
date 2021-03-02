@@ -18,6 +18,38 @@ A maven plugin to simplify and automate [NextGen Connect](https://github.com/nex
   <version>v1.0.0</version>
 </dependency>
 ```
+---
+## Usage
+### `@ServerClass`
+Annotated class will be generated as a `<string>` entry.
+```xml
+<serverClasses>
+    <string>net.kaurpalang.mirthpluginsample.server.ServerPlugin</string>
+    <string>net.kaurpalang.mirthpluginsample.server.ServerPlugin2</string>
+</serverClasses>
+```
+
+### `@ClientClass`
+Annotated class will be generated as a `<string>` entry.
+```xml
+<clientClasses>
+    <string>net.kaurpalang.mirthpluginsample.client.ClientPlugin</string>
+    <string>net.kaurpalang.mirthpluginsample.client.ClientPlugin2</string>
+</clientClasses>
+```
+
+### `@ApiProvider(ApiProviderType type)`
+Annotated class will be generated as a `<apiProvider>` entry.
+```xml
+<apiProvider name="net.kaurpalang.mirthpluginsample.shared.ApiProviderSample" type="SERVLET_INTERFACE"/>
+```
+
+### Libraries
+
+All libraries inside `pluginroot/libs/runtime/{type}` are packaged into the `.zip` archive into `libs` directory.
+```xml
+<library path="libs/sample-external.jar" type="{type}"/>
+```
 
 ---
 
