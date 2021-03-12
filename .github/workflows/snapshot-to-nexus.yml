@@ -1,4 +1,4 @@
-name: Publish plugin snapshot to Nexus
+name: Publish snapshot to Nexus
 on: [push]
 
 jobs:
@@ -6,21 +6,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up JDK 11
-      uses: actions/setup-java@v1
-      with:
-        java-version: 11
-    - name: Build with Maven
-      run: mvn package --file pom.xml
-    - name: Nexus Repo Publish
-      uses: sonatype-nexus-community/nexus-repo-github-action@master
-      with:
-        serverUrl: https://nexus.kaurpalang.com/
-        username: github
-        password: ${{ secrets.GITHUBNEXUSPASSWORD }}
-        format: maven2
-        repository: personal-snapshots
-        coordinates: groupId=net.kaurpalang artifactId=mirth-plugin-maven-plugin version=0.1-SNAPSHOT
-        assets: extension=jar
-        filename: ./target/mirth-plugin-maven-plugin-1.0-SNAPSHOT.jar
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Create settings.xml
+        uses: s4u/maven-settings-action@v2
+        with:
+          githubServer: false
+          servers: |
+          '[{
+              "id": "nexus-kaurpalang-snapshots",
+              "username": "${{secrets.NEXUS_USERNAME}}",
+              "password": "${{secrets.NEXUS_PASSWORD}}"
+          }]'
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Publish to Nexus
+        run: mvn deploy -DskipTests
