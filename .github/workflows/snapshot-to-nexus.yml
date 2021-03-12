@@ -1,5 +1,5 @@
 name: Publish snapshot to Nexus
-on: [push]
+on: push
 
 jobs:
   build:
