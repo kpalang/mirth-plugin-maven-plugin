@@ -19,11 +19,11 @@ jobs:
         with:
           githubServer: false
           servers: |
-          '[{
+            [{
               "id": "nexus-kaurpalang-releases",
               "username": "${{secrets.NEXUS_USERNAME}}",
               "password": "${{secrets.NEXUS_PASSWORD}}"
-          }]'
+            }]
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
