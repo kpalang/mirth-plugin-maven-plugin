@@ -1,9 +1,9 @@
-package net.kaurpalang.mirth.annotationsplugin.model;
+package com.kaurpalang.mirth.annotationsplugin.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.kaurpalang.mirth.annotationsplugin.type.ApiProviderType;
+import com.kaurpalang.mirth.annotationsplugin.type.ApiProviderType;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package net.kaurpalang.mirth.annotationsplugin.type;
+package com.kaurpalang.mirth.annotationsplugin.type;
 
 public enum LibraryType {
     SERVER, SHARED, CLIENT

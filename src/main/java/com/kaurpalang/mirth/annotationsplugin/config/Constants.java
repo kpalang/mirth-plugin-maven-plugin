@@ -1,4 +1,4 @@
-package net.kaurpalang.mirth.annotationsplugin.config;
+package com.kaurpalang.mirth.annotationsplugin.config;
 
 public class Constants {
     public static final String DEFAULT_AGGREGATOR_FILE_PATH = "distribution/aggregated.json";

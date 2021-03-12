@@ -1,13 +1,13 @@
-package net.kaurpalang.mirth.annotationsplugin.processor;
+package com.kaurpalang.mirth.annotationsplugin.processor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auto.service.AutoService;
-import net.kaurpalang.mirth.annotationsplugin.config.Constants;
-import net.kaurpalang.mirth.annotationsplugin.annotation.ApiProvider;
-import net.kaurpalang.mirth.annotationsplugin.annotation.ClientClass;
-import net.kaurpalang.mirth.annotationsplugin.annotation.ServerClass;
-import net.kaurpalang.mirth.annotationsplugin.model.ApiProviderModel;
-import net.kaurpalang.mirth.annotationsplugin.model.PluginState;
+import com.kaurpalang.mirth.annotationsplugin.config.Constants;
+import com.kaurpalang.mirth.annotationsplugin.annotation.ApiProvider;
+import com.kaurpalang.mirth.annotationsplugin.annotation.ClientClass;
+import com.kaurpalang.mirth.annotationsplugin.annotation.ServerClass;
+import com.kaurpalang.mirth.annotationsplugin.model.ApiProviderModel;
+import com.kaurpalang.mirth.annotationsplugin.model.PluginState;
 import org.apache.commons.io.FileUtils;
 
 import javax.annotation.processing.*;

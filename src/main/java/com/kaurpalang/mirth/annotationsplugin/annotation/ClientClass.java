@@ -1,6 +1,4 @@
-package net.kaurpalang.mirth.annotationsplugin.annotation;
-
-import net.kaurpalang.mirth.annotationsplugin.type.LibraryType;
+package com.kaurpalang.mirth.annotationsplugin.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,6 +7,5 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.CLASS)
-public @interface Library {
-    LibraryType type();
+public @interface ClientClass {
 }

@@ -1,10 +1,10 @@
-package net.kaurpalang.mirth.annotationsplugin.mojo;
+package com.kaurpalang.mirth.annotationsplugin.mojo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.kaurpalang.mirth.annotationsplugin.config.Constants;
-import net.kaurpalang.mirth.annotationsplugin.model.ApiProviderModel;
-import net.kaurpalang.mirth.annotationsplugin.model.LibraryModel;
-import net.kaurpalang.mirth.annotationsplugin.model.PluginState;
+import com.kaurpalang.mirth.annotationsplugin.config.Constants;
+import com.kaurpalang.mirth.annotationsplugin.model.ApiProviderModel;
+import com.kaurpalang.mirth.annotationsplugin.model.LibraryModel;
+import com.kaurpalang.mirth.annotationsplugin.model.PluginState;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -65,7 +65,7 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    public void execute() throws MojoExecutionException {
+    public void execute() {
 
         try {
             File aggregatorFile = FileUtils.getFile(this.aggregatorPath);

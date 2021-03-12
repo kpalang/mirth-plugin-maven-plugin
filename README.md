@@ -13,9 +13,9 @@ A maven plugin to simplify and automate [NextGen Connect](https://github.com/nex
 ```
 ```xml
 <dependency>
-  <groupId>net.kaurpalang</groupId>
+  <groupId>com.kaurpalang</groupId>
   <artifactId>mirth-plugin-maven-plugin</artifactId>
-  <version>v1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 ---
@@ -27,8 +27,8 @@ See [Sample project](https://github.com/kpalang/mirth-sample-plugin) on Github
 Annotated class will be generated as a `<string>` entry.
 ```xml
 <serverClasses>
-    <string>net.kaurpalang.mirthpluginsample.server.ServerPlugin</string>
-    <string>net.kaurpalang.mirthpluginsample.server.ServerPlugin2</string>
+    <string>com.kaurpalang.mirthpluginsample.server.ServerPlugin</string>
+    <string>com.kaurpalang.mirthpluginsample.server.ServerPlugin2</string>
 </serverClasses>
 ```
 
@@ -36,15 +36,15 @@ Annotated class will be generated as a `<string>` entry.
 Annotated class will be generated as a `<string>` entry.
 ```xml
 <clientClasses>
-    <string>net.kaurpalang.mirthpluginsample.client.ClientPlugin</string>
-    <string>net.kaurpalang.mirthpluginsample.client.ClientPlugin2</string>
+    <string>com.kaurpalang.mirthpluginsample.client.ClientPlugin</string>
+    <string>com.kaurpalang.mirthpluginsample.client.ClientPlugin2</string>
 </clientClasses>
 ```
 
 ### `@ApiProvider(ApiProviderType type)`
 Annotated class will be generated as a `<apiProvider>` entry.
 ```xml
-<apiProvider name="net.kaurpalang.mirthpluginsample.shared.ApiProviderSample" type="SERVLET_INTERFACE"/>
+<apiProvider name="com.kaurpalang.mirthpluginsample.shared.ApiProviderSample" type="SERVLET_INTERFACE"/>
 ```
 
 ### Libraries

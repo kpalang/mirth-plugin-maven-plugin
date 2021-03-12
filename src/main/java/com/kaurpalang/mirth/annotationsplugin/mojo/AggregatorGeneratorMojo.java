@@ -1,6 +1,6 @@
-package net.kaurpalang.mirth.annotationsplugin.mojo;
+package com.kaurpalang.mirth.annotationsplugin.mojo;
 
-import net.kaurpalang.mirth.annotationsplugin.config.Constants;
+import com.kaurpalang.mirth.annotationsplugin.config.Constants;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -17,24 +17,21 @@ public class AggregatorGeneratorMojo extends AbstractMojo {
     private String aggregatorPath;
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() {
         File aggregatorFile = new File(this.aggregatorPath);
 
         try {
             if (!aggregatorFile.exists()) {
                 if (!aggregatorFile.getParentFile().mkdirs()) {
                     getLog().error("Aggregation directory creation failed!");
-                    return;
                 }
 
                 if (!aggregatorFile.createNewFile()) {
                     getLog().error("Aggregation file creation failed!");
-                    return;
                 }
             }
         } catch (Exception e) {
             getLog().error(e);
-            return;
         }
     }
 }

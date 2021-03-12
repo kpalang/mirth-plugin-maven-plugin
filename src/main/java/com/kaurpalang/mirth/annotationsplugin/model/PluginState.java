@@ -1,4 +1,4 @@
-package net.kaurpalang.mirth.annotationsplugin.model;
+package com.kaurpalang.mirth.annotationsplugin.model;
 
 import lombok.Getter;
 
