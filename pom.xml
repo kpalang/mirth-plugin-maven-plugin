@@ -5,7 +5,7 @@
   <groupId>net.kaurpalang</groupId>
   <artifactId>mirth-plugin-maven-plugin</artifactId>
   <name>mirth-plugin-maven-plugin Maven Mojo</name>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <properties>
@@ -16,7 +16,6 @@
     <maven.compiler.target>11</maven.compiler.target>
 
     <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-    <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
 
     <commons.version>2.8.0</commons.version>
     <lombok.version>1.18.16</lombok.version>
