@@ -83,7 +83,8 @@ public class MirthPluginProcessor extends AbstractProcessor {
      */
     private void processApiProviders(RoundEnvironment roundEnv) {
         for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(ApiProvider.class)) {
-            if (annotatedElement.getKind() != ElementKind.CLASS) {
+            List<ElementKind> allowedKinds = Arrays.asList(ElementKind.CLASS, ElementKind.INTERFACE);
+            if (!allowedKinds.contains(annotatedElement.getKind())) {
                 error(annotatedElement, "Only classes can be annotated with @%s", ApiProvider.class.getSimpleName());
             } else {
                 ApiProvider provider = annotatedElement.getAnnotation(ApiProvider.class);
