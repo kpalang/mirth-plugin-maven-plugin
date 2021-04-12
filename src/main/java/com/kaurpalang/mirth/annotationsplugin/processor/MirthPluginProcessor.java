@@ -19,9 +19,7 @@ import javax.tools.Diagnostic;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @AutoService(Processor.class)
 @SupportedOptions("aggregator.file")
@@ -83,6 +81,7 @@ public class MirthPluginProcessor extends AbstractProcessor {
      */
     private void processApiProviders(RoundEnvironment roundEnv) {
         for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(ApiProvider.class)) {
+
             List<ElementKind> allowedKinds = Arrays.asList(ElementKind.CLASS, ElementKind.INTERFACE);
             if (!allowedKinds.contains(annotatedElement.getKind())) {
                 error(annotatedElement, "Only classes can be annotated with @%s", ApiProvider.class.getSimpleName());
