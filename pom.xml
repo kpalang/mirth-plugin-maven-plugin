@@ -5,7 +5,7 @@
   <groupId>com.kaurpalang</groupId>
   <artifactId>mirth-plugin-maven-plugin</artifactId>
   <name>mirth-plugin-maven-plugin Maven Mojo</name>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <properties>
