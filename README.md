@@ -59,7 +59,7 @@ All libraries inside `pluginroot/libs/runtime/{type}` are packaged into the `.zi
 ## Maven goals overview
 
 #### generate-aggregator
-Pur pose is to generate a file to store all found classes before annotation processing.
+Purpose is to generate a file to store all found classes before annotation processing.
 
 | Parameter | Description | Default |
 | ------ | ------ | ------  |
@@ -77,5 +77,5 @@ Purpose is to generate the actual plugin.xml file.
 | \<url> | Plugin's website | https://github.com/kpalang/mirth-sample-plugin |
 | \<description> | Plugin's description | A sample Mirth plugin to showcase my Maven plugin |
 | \<path> | The name of the directory that will be extracted into Mirth's extensions directory | sampleplugin |
-| \<aggregatorPath> | Aggregation file location | distribution/aggregator/aggregated.json |
+| \<aggregatorPath> | Aggregation file location | distribution/aggregated.json |
 | \<outputPath> | Specifies where to put generated plugin.xml | ${project.basedir}/plugin.xml |
