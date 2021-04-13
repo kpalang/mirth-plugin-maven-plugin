@@ -2,6 +2,7 @@ name: Publish release to Nexus
 on:
   release:
     types: [published]
+    branches: [master]
 
 jobs:
   build:
