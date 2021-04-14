@@ -7,7 +7,6 @@ import com.kaurpalang.mirth.annotationsplugin.model.LibraryModel;
 import com.kaurpalang.mirth.annotationsplugin.model.PluginState;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -124,11 +123,15 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
 
                 if (Files.exists(submoduleBuildDir)) {
 
-                    File[] jarfiles = submoduleBuildDir.toFile().listFiles(
+                    File[] filesArray = submoduleBuildDir.toFile().listFiles(
                             (dir, name) -> name.equals(String.format("%s-%s.jar", parentProject.getArtifactId(), module))
                     );
 
-                    for (File jarfile : jarfiles) {
+                    if (filesArray == null) {
+                        return;
+                    }
+
+                    for (File jarfile : filesArray) {
                         LibraryModel model = new LibraryModel(module.toUpperCase(), jarfile.getName());
                         appendLibraryChildToElement(doc, rootElement, model);
                     }
@@ -187,9 +190,16 @@ public class PluginXMLGeneratorMojo extends AbstractMojo {
         Path submoduleLibsDir = Paths.get(project.getParent().getBasedir().getAbsolutePath(), "libs", "runtime", submodule);
 
         if (Files.exists(submoduleLibsDir)) {
-            File[] jarfiles = submoduleLibsDir.toFile().listFiles();
 
-            for (File jarfile : jarfiles) {
+            File[] filesArray = submoduleLibsDir.toFile().listFiles(
+                    (dir, name) -> name.endsWith(".jar")
+            );
+
+            if (filesArray == null) {
+                return;
+            }
+
+            for (File jarfile : filesArray) {
                 LibraryModel libModel = new LibraryModel(submodule.toUpperCase(), String.format("libs/%s", jarfile.getName()));
                 targetList.add(libModel);
             }
