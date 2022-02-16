@@ -8,7 +8,7 @@ A maven plugin to simplify and automate [NextGen Connect](https://github.com/nex
 ```xml
 <repository>
     <id>nexus</id>
-    <url>https://nexus.kaurpalang.com/repository/maven-public/</url>
+    <url>https://maven.kaurpalang.com/repository/maven-public/</url>
 </repository>
 ```
 ```xml
