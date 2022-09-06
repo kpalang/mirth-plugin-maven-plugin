@@ -22,11 +22,6 @@ jobs:
               "id": "nexus-kaurpalang-snapshots",
               "username": "${{secrets.NEXUS_USERNAME}}",
               "password": "${{secrets.NEXUS_PASSWORD}}"
-            },
-            {
-              "id": "nexus-kaurpalang-releases",
-              "username": "${{secrets.NEXUS_USERNAME}}",
-              "password": "${{secrets.NEXUS_PASSWORD}}"
             }]
 
       - name: Build with Maven
