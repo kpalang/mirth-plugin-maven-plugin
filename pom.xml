@@ -22,7 +22,7 @@
 
     <commons.version>2.11.0</commons.version>
     <lombok.version>1.18.24</lombok.version>
-    <jackson.version>2.13.4</jackson.version>
+    <jackson.version>2.13.4.1</jackson.version>
     <autoservice.version>1.0.1</autoservice.version>
   </properties>
 
