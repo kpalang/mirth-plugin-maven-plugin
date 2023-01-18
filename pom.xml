@@ -27,8 +27,8 @@
   </properties>
 
   <scm>
-    <connection>scm:git:git://github.com:kpalang/mirth-plugin-maven-plugin.git</connection>
-    <developerConnection>scm:git:git://github.com/kpalang/mirth-plugin-maven-plugin.git</developerConnection>
+    <connection>scm:git:git@github.com:kpalang/mirth-plugin-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:kpalang/mirth-plugin-maven-plugin.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
