@@ -1,5 +1,9 @@
 name: Publish snapshot to Nexus
-on: push
+
+on:
+  push:
+    branches:
+      - 'master'
 
 jobs:
   build:

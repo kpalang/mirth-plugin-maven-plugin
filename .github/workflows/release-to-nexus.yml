@@ -1,8 +1,9 @@
 name: Publish release to Nexus
+
 on:
-  release:
-    types: [published]
-    branches: [master]
+  push:
+    branches:
+      - 'release/**'
 
 jobs:
   build:
