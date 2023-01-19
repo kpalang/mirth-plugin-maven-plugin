@@ -1,9 +1,10 @@
 name: Publish release to Nexus
 
 on:
-  push:
-    branches:
-      - 'release/**'
+  workflow_run:
+    workflows: [ Create release and iterate versions ]
+    types:
+      - completed
 
 jobs:
   build:
@@ -16,6 +17,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
+          cache: 'maven'
 
       - name: Create settings.xml
         uses: s4u/maven-settings-action@v2
