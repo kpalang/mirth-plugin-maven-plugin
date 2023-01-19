@@ -1,0 +1,60 @@
+name: Create release and iterate versions
+
+on:
+  workflow_dispatch:
+    inputs:
+      increment_type:
+        type: choice
+        description: Which version to increment?
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 11
+          cache: 'maven'
+
+      - name: Set up git
+        run: |
+          git config --add --bool push.autoSetupRemote true
+          git config user.email "<>"
+          git config user.name "Github Actions"
+
+      - name: Create release branch
+        run: |
+          current_release_version=$(mvn build-helper:parse-version help:evaluate -Dexpression=release-version -q -DforceStdout)
+          git checkout -b "release/$current_release_version"
+          mvn versions:set -DnewVersion=$current_release_version
+          git add pom.xml
+          git commit -m "Prepared release $current_release_version"
+          git push
+          git checkout master
+
+      - name: Increment major
+        if: github.event.inputs.increment_type == 'major'
+        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.nextMajorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion}-SNAPSHOT
+
+      - name: Increment minor
+        if: github.event.inputs.increment_type == 'minor'
+        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.\${parsedVersion.incrementalVersion}-SNAPSHOT
+
+      - name: Increment patch
+        if: github.event.inputs.increment_type == 'patch'
+        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}-SNAPSHOT
+
+      - name: Iterate development branch
+        run: |
+          git add pom.xml
+          git commit -m "Prepared next development iteration"
+          git push -u origin
