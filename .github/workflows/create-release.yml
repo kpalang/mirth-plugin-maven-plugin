@@ -43,11 +43,11 @@ jobs:
 
       - name: Increment major
         if: github.event.inputs.increment_type == 'major'
-        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.nextMajorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion}-SNAPSHOT
+        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.nextMajorVersion}.0.0-SNAPSHOT
 
       - name: Increment minor
         if: github.event.inputs.increment_type == 'minor'
-        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.\${parsedVersion.incrementalVersion}-SNAPSHOT
+        run: mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT
 
       - name: Increment patch
         if: github.event.inputs.increment_type == 'patch'
