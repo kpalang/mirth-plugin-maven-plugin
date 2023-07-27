@@ -1,6 +1,6 @@
 # mirth-plugin-maven-plugin
 
-> `mirth-plugin-maven-plugin` is now archived in favor of [`mirth-plugin-maven-plugin-kt`](https://github.com/kpalang/mirth-plugin-maven-plugin-kt), a Kotlin rewrite with some improvements.
+> **`mirth-plugin-maven-plugin` is now archived in favor of [`mirth-plugin-maven-plugin-kt`](https://github.com/kpalang/mirth-plugin-maven-plugin-kt), a Kotlin rewrite with some improvements.**
 
 A maven plugin to simplify and automate [NextGen Connect](https://github.com/nextgenhealthcare/connect) plugin development.
 
